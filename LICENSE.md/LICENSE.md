@@ -1,4 +1,4 @@
-PSYCHBENCH 1.0b (2021.09.20) END USER LICENSE AGREEMENT
+PSYCHBENCH 1.1b (2021.12.17) END USER LICENSE AGREEMENT
 
 
 
@@ -20,7 +20,7 @@ The core is licensed to you as freeware under the following conditions:
 
 a. You may use the core free of charge.
 
-b. This version of the core will expire at the end of 2022. If you wish to 
+b. This version of the core will expire at the end of 2023. If you wish to 
 continue using the core after then you must download an update. You can check 
 for updates using the function pb_update in PsychBench.
 
@@ -100,5 +100,5 @@ The author of each contributed element class is stated in its documentation.
 
 For license terms for a contributed element class, see its documentation. If
 no license is stated in the documentation, the contributed element class is
-free software under the MIT license (see above under Standard Element
+free and open-source software under the MIT license (see above under Standard Element
 Classes).
