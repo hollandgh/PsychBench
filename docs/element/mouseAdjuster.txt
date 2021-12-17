@@ -1,0 +1,282 @@
+An adjuster and response recorder element that lets the subject adjust properties of other elements by clicking and dragging the mouse cursor on screen like a slider. Or you can use property .move to adjust the position of another element by clicking and dragging the element. One mouse button adjusts and the other says done adjusting. By default waits for one "done adjusting" response, then ends on its own (so you don't need to set property .end unless you want it to end earlier). You can use properties to record multiple responses and set other options. May not work with trackpads.
+
+
+
+
+
+INPUT PROPERTIES
+You can set input properties to specify how an object will show or run.
+To leave any property at default, omit it (or leave = []).
+==========
+
+
+
+----------
+Adjustable properties
+
+You can allow the subject to adjust the following input properties of an object of this class during the experiment using an adjuster element. If you need to make other properties adjustable, you can edit the element class.
+
+(None)
+
+
+
+----------
+drag_x     NO DEFAULTS.
+drag_y
+drag_xy
+
+Properties = true/false setting adjustment mode. Set ONE = true:
+
+.drag_x = true: Subject adjusts by dragging the mouse cursor horizontally. Adjustment value is a number per distance dragged--see .deltaRate below.
+
+.drag_y = true: Same but vertically.
+
+.drag_xy = true: Subject adjusts by dragging the mouse cursor in both dimensions. Adjustment value is a 1x2 vector per distance dragged (so generally the target you set in .adjust.target must be a 1x2 vector).
+
+
+
+----------
+deltaRate    NO DEFAULT (ignored if .move = true below).
+
+A number that is adjustment value per deg visual angle dragged on screen. Magnitude is .deltaRate * distance dragged. right/up = +, left/down = -. e.g.
+
+.drag_x = true
+.drag_y = false (default)
+.deltaRate = 0.5
+-> +0.5/deg dragged right, -0.5/deg dragged left
+
+If .drag_xy = true then .deltaRate can be a 1x2 vector setting separate rates for [x y].
+
+Use .adjust to set where and how adjustments are applied.
+
+
+
+----------
+deltaIncrement    DEFAULT: apply adjustments of any magnitude.
+
+By default, drag applies adjustments of any magnitude down to whatever corresponds to 1 px dragged on screen. However, some element properties can only receive adjustments that are multiples of some increment. e.g. a property that must be an integer can only receive adjustments that are integer multiples of 1. If so, you can set increment here (a number > 0). The adjuster will then buffer (not round or clip) adjustments to apply them in integer multiples of the increment. If .drag_xy = true then .deltaIncrement can be a 1x2 vector corresponding to separate increments for [x y]. 0 = apply adjustments of any magnitude.
+
+
+
+----------
+clickAreaSize    DEFAULT: click anywhere to drag.
+
+Size of the rectangular area on screen that the subject can click in to start a drag. This is side length for a square area, or a vector [width height] for a rectangular area (deg). inf = anywhere on screen. The area is centered at element position which you can set in property .position (default screen center).
+
+
+
+----------
+move    DEFAULT: false.
+
+true/false: special mode to adjust position on screen by clicking & dragging an element. If true:
+
+- .adjust.target must be property .position.
+
+- .drag_x/.drag_y/.drag_xy above sets dimension(s) the subject can move the element in (typically set .drag_xy = true to move in both dimensions).
+
+- .deltaRate, .deltaIncrement, .clickAreaSize above are ignored.
+
+
+
+----------
+n_dragButton    DEFAULT: button 1 drags, button 2 inputs response (done adjusting)
+
+A number or vector that is mouse button number(s) to click to drag. All other buttons the subject can click to input that they are done adjusting (the "response").
+
+
+
+----------
+cursorShape    DEFAULT: current mouse cursor shape.
+
+(Psychtoolbox framework only)
+
+A string or number setting mouse cursor shape. This goes to the "type" input of Psychtoolbox ShowCursor--see there for more information. Standard options are:
+
+"Arrow"
+"CrossHair"
+"Hand"
+"SandClock"
+"TextCursor"
+
+[] = current shape.
+
+
+
+----------
+INPUT PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- label     DEFAULT: none.
+Struct with any fields containing any values you want as custom information to see for the object in experiment results. Field names go to headings in results table. [] = none.
+
+- report    DEFAULT: none.
+Array of strings that are names of properties to see for the object in experiment results. [] = none.
+
+
+
+----------
+INPUT PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- start             DEFAULT: no start cues.
+Start time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no start cues -> element doesn't run.
+
+- end               DEFAULT: no end cues.
+End time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, duration, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no end cues -> element runs indefinitely unless it can end on its own.
+
+- startBuffer
+- endBuffer         DEFAULTS: none.
+Time buffer to start/end (sec) if bufferable start/end latency occurs. Only for experiments where precise timing is important.
+
+- syncExperimentAtTrigger
+Not used by this class.
+
+- staircase         DEFAULT: don't staircase element.
+Staircase one or more input properties of the element. Further struct or struct array with one or more fields: .target, setExpr, min, max, setStaircaseExpr. [] = don't staircase element.
+
+
+
+----------
+INPUT PROPERTIES ALL VISUAL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2.1 for full documentation. ***
+
+
+- position          DEFAULT: screen center.
+Vector [x y] setting position on screen (deg). - = left/up, + = right/down, [0 0] = screen center.
+
+- layer
+- nn_eyes
+- rotate
+- flipHorz
+- flipVert
+- opacity
+- blur
+- filterType
+- filterKernel
+- filterResolution
+- backColor
+Not used by this class.
+
+
+
+----------
+INPUT PROPERTIES ALL RESPONSE RECORDER ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2.2 for full documentation. ***
+
+
+- translateResponse            DEFAULT: use raw response values.
+2-column array with col 1 possible raw response values, col 2 values to translate to. Numeric array if all values are numbers, else cell array. OR string: MATLAB expression for PsychBench to use to translate. [] = use raw response values.
+
+- scoreResponse                DEFAULT: don't score response.
+true/false: score response using MATLAB ISEQUALN. OR string: MATLAB expression for PsychBench to use to score response.
+
+- correctResponse              DEFAULT: [].
+Correct response value(s). Needed if you set .scoreResponse.
+
+- maxNumResponses              DEFAULT: 1.
+Element will end on its own when it records this many responses. inf = no limit.
+
+- recordDefaultResponse        DEFAULT: don't record "no response".
+true/false: record response = [] if no response recorded by end.
+
+- scoreResponseForStaircase    DEFAULT: automatic.
+true/false: any staircase for the trial gets response score from this response recorder. [] = automatic if only one response recorder scores a response in the trial.
+
+
+
+----------
+INPUT PROPERTIES ALL ADJUSTER ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2.3 for full documentation. ***
+
+
+- adjust    DEFAULT: adjuster doesn't apply adjustments.
+Specify which other element(s) and property(s) to apply adjustments to and further options. Further struct with one or more fields: .target, setExpr, min, max. [] = none.
+
+
+
+
+
+RECORD PROPERTIES
+PsychBench uses record properties to record information during experiments.
+You can't set record properties but you can see them in experiment results using input property .report.
+==========
+
+
+
+----------
+RECORD PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- who
+String: variable name and possibly index you used for the object in the experiment script, e.g. "pictures(2)".
+
+
+
+----------
+RECORD PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- startTime
+– endTime
+Start/End time relative to trial 1 start (sec).
+
+- duration
+End time - start time (sec).
+
+- n_startFrame
+- n_endFrame
+Frame number in the trial for first/last frames the element ran in. Start time = first frame start time. End time = last frame end time.
+
+- startLatencyBufferable
+- endLatencyBufferable
+Start/End delay that might be reducible by setting .startBuffer/.endBuffer (sec). Only for experiments where precise timing is important.
+
+- syncTime
+Experiment synchronization time set by this element, relative to trial 1 start (sec). [] = none.
+
+- trigger
+- triggerTime
+- d_triggerTime
+- n_triggerFrame
+- numTriggers
+Not used by this class.
+
+
+
+----------
+RECORD PROPERTIES ALL RESPONSE RECORDER ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2.2 for full documentation. ***
+
+
+- response
+Response value(s) recorded.
+
+- responseScore
+Response score(s) if you set .scoreResponse.
+
+- responseTime
+Time(s) response received relative to trial 1 start (sec).
+
+- responseLatency
+Time(s) response received relative to response recorder start for first response, or to previous response for subsequent responses (sec).
+
+- d_responseTime
+Uncertainty in response time(s) if response recorder checks for response once per frame (sec). Range = +/- d_responseTime.
+
+- n_responseFrame
+Frame number in the trial when responses(s) was recorded.
+
+- numResponses
+Number of responses recorded.

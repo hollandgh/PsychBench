@@ -1,0 +1,106 @@
+Plays whatever sound your system assigns to the MATLAB BEEP command, then ends on its own (so you don't need to set property .end). For precise timing or more options use a sound element instead.
+
+
+
+
+
+INPUT PROPERTIES
+You can set input properties to specify how an object will show or run.
+To leave any property at default, omit it (or leave = []).
+==========
+
+
+
+----------
+Adjustable input properties
+
+You can allow the subject to adjust the following input properties of an object of this class during the experiment using an adjuster element. If you need to make other properties adjustable, you can edit the element class.
+
+(None)
+
+
+
+----------
+INPUT PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- label     DEFAULT: none.
+Struct with any fields containing any values you want as custom information to see for the object in experiment results. Field names go to headings in results table. [] = none.
+
+- report    DEFAULT: none.
+Array of strings that are names of properties to see for the object in experiment results. [] = none.
+
+
+
+----------
+INPUT PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- start             DEFAULT: no start cues.
+Start time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no start cues -> element doesn't run.
+
+- end               DEFAULT: no end cues.
+End time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, duration, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no end cues -> element runs indefinitely unless it can end on its own.
+
+- startBuffer
+- endBuffer         DEFAULTS: none.
+Time buffer to start/end (sec) if bufferable start/end latency occurs. Only for experiments where precise timing is important.
+
+- syncExperimentAtTrigger
+Not used by this class.
+
+- staircase         DEFAULT: don't staircase element.
+Staircase one or more input properties of the element. Further struct or struct array with one or more fields: .target, setExpr, min, max, setStaircaseExpr. [] = don't staircase element.
+
+
+
+RECORD PROPERTIES
+PsychBench uses record properties to record information during experiments.
+You can't set record properties but you can see them in experiment results using input property .report.
+==========
+
+
+
+----------
+RECORD PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- who
+String: variable name and possibly index you used for the object in the experiment script, e.g. "pictures(2)".
+
+
+
+----------
+RECORD PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- startTime
+– endTime
+Start/End time relative to trial 1 start (sec).
+
+- duration
+End time - start time (sec).
+
+- n_startFrame
+- n_endFrame
+Frame number in the trial for first/last frames the element ran in. Start time = first frame start time. End time = last frame end time.
+
+- startLatencyBufferable
+- endLatencyBufferable
+Start/End delay that might be reducible by setting .startBuffer/.endBuffer (sec). Only for experiments where precise timing is important.
+
+- syncTime
+- trigger
+- triggerTime
+- d_triggerTime
+- n_triggerFrame
+- numTriggers
+Not used by this class.

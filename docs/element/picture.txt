@@ -1,0 +1,186 @@
+A picture from a file in any format MATLAB IMREAD understands (jpeg, etc.), or directly from a image array.
+
+
+
+
+
+INPUT PROPERTIES
+You can set input properties to specify how an object will show or run.
+To leave any property at default, omit it (or leave = []).
+==========
+
+
+
+----------
+Adjustable properties
+
+You can allow the subject to adjust the following input properties of an object of this class during the experiment using an adjuster element. If you need to make other properties adjustable, you can edit the element class.
+
+position
+nn_eyes
+rotate
+opacity
+
+
+
+----------
+fileName
+dataExpr    NO DEFAULTS.
+
+Set one of .fileName or .dataExpr:
+
+.fileName is a string that is name of picture file to show. Include path if the file is not in the MATLAB current folder or search path (or not the first file with that name on the search path). File can be any format MATLAB IMREAD understands (jpeg, bmp, etc.). Ignored if you set .dataExpr.
+
+OR
+
+.dataExpr: Use this to get the picture from an image array in the base MATLAB workspace. The image array is an n (px height) x m (px width) x 1/2/3/4 (1 = L, 2 = LA, 3 = RGB, 4 = RGBA) numeric array. By default values should be 0-255, but you can change this using .bpc below. .dataExpr is a string that is the expression pointing to the data. This can be just a variable name, or it can include indexes, field names, etc.
+
+e.g.
+"pictureData"
+"pictures{5}"
+"albums.cats(2).pic"
+
+
+
+----------
+height    DEFAULT: fit picture to screen.
+
+Height on screen (deg). Or a string "f" = fit whole picture to screen.
+
+
+
+----------
+bpc    DEFAULT: 8.
+
+PsychBench automatically detects the color depth of most pictures loaded from files. If it cannot, or if you use .dataExpr above to get the picture from an image array, then you can specify bits per pixel color component here. Usually leave at default = 8 (each pixel channel value, e.g. RGB value, between 0-255).
+
+
+
+----------
+INPUT PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- label     DEFAULT: none.
+Struct with any fields containing any values you want as custom information to see for the object in experiment results. Field names go to headings in results table. [] = none.
+
+- report    DEFAULT: none.
+Array of strings that are names of properties to see for the object in experiment results. [] = none.
+
+
+
+----------
+INPUT PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- start             DEFAULT: no start cues.
+Start time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no start cues -> element doesn't run.
+
+- end               DEFAULT: no end cues.
+End time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, duration, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no end cues -> element runs indefinitely unless it can end on its own.
+
+- startBuffer
+- endBuffer         DEFAULTS: none.
+Time buffer to start/end (sec) if bufferable start/end latency occurs. Only for experiments where precise timing is important.
+
+- syncExperimentAtTrigger
+Not used by this class.
+
+- staircase         DEFAULT: don't staircase element.
+Staircase one or more input properties of the element. Further struct or struct array with one or more fields: .target, setExpr, min, max, setStaircaseExpr. [] = don't staircase element.
+
+
+
+----------
+INPUT PROPERTIES ALL VISUAL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2.1 for full documentation. ***
+
+
+- position          DEFAULT: screen center.
+Vector [x y] setting position on screen (deg). - = left/up, + = right/down, [0 0] = screen center.
+
+- layer             DEFAULT: 0.
+Number setting layering on screen. + = backward.
+
+- nn_eyes           DEFAULT: both eyes.
+1 = show on left eye, 2 = right eye, [1 2] = both eyes. Ignored if stereo display is of (screen object property .stereo).
+
+- rotate            DEFAULT: 0 deg.
+Rotation clockwise (+x -> +y screen axis) about position set in .position (deg).
+
+- flipHorz
+- flipVert          DEFAULTS: don't flip.
+true/false: flip horizontally/vertically. (Psychtoolbox framework only)
+
+- opacity           DEFAULT: no additional transparency.
+0-1: 0 = fully transparent, 1 = nominal. (Psychtoolbox framework only)
+
+- blur              DEFAULT: don't blur.
+Blur filter level: width/diameter (box/disk) or standard deviation (Gaussian) of filter kernel on screen (deg). 0 = no blur. Ignored if .filterKernel set. (Psychtoolbox framework only)
+
+- filterType        DEFAULT: Gaussian.
+Blur filter type. String: "box", "disc", "gaussian". (Psychtoolbox framework only)
+
+- filterKernel      DEFAULT: ignored.
+Matrix: Custom convolution filter kernel. If you set .filterResolution then this is in the downsampled space. [] = use .blur instead instead. (Psychtoolbox framework only)
+
+- filterResolution  DEFAULT: filter applied at screen resolution.
+0-1: 1 = apply blur or other filter to element display at resolution on screen. < 1 = apply at lower resolution, then scale to screen. (Psychtoolbox framework only)
+
+- backColor         DEFAULT: black.
+RGB vector with numbers between 0-1 setting element background color if blur/filter is on. Ignored if blur/filter is off (most elements have transparent background then). (Psychtoolbox framework only)
+
+
+
+
+
+RECORD PROPERTIES
+PsychBench uses record properties to record information during experiments.
+You can't set record properties but you can see them in experiment results using input property .report.
+==========
+
+
+
+----------
+RECORD PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- who
+String: variable name and possibly index you used for the object in the experiment script, e.g. "pictures(2)".
+
+
+
+----------
+RECORD PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- startTime
+– endTime
+Start/End time relative to trial 1 start (sec).
+
+- duration
+End time - start time (sec).
+
+- n_startFrame
+- n_endFrame
+Frame number in the trial for first/last frames the element ran in. Start time = first frame start time. End time = last frame end time.
+
+- startLatencyBufferable
+- endLatencyBufferable
+Start/End delay that might be reducible by setting .startBuffer/.endBuffer (sec). Only for experiments where precise timing is important.
+
+- syncTime
+- trigger
+- triggerTime
+- d_triggerTime
+- n_triggerFrame
+- numTriggers
+Not used by this class.

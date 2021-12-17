@@ -1,0 +1,189 @@
+A mask consisting of dots moving with random linear motion on a transparent background. Various masks are possible ranging from direction coherence masks to more completely randomized masks. Dots move in straight lines with initial positions, directions, speeds, ages, and lifetimes randomized for each dot. If a dot reaches the edge of the mask area it wraps around to the opposite side. If a dot reaches the end of its lifetime it disappears and reappears with new random position, velocity, and lifetime (and age 0).
+
+Note that since masks are randomized and have a transparent background you can layer multiple masks on top of each other if you need one mask that has a mix of properties.
+
+
+
+
+
+INPUT PROPERTIES
+You can set input properties to specify how an object will show or run.
+To leave any property at default, omit it (or leave = []).
+==========
+
+
+
+----------
+Adjustable properties
+
+You can allow the subject to adjust the following input properties of an object of this class during the experiment using an adjuster element. If you need to make other properties adjustable, you can edit the element class.
+
+numDots
+
+
+
+----------
+size    DEFAULT: square with size 12 deg.
+
+Side length for a square mask area, or a vector [width height] for a rectangular area (deg).
+
+
+
+----------
+numDots    DEFAULT: 200.
+
+Number of dots.
+
+
+
+----------
+dotDirection    DEFAULT: [0 180] = dots move in random directions.
+
+Dot motion direction clockwise, 0 = right (deg). Or a vector [direction delta] setting direction +/- delta to randomize for each dot.
+
+
+
+----------
+dotSpeed    DEFAULT: [1.25 0.75] = dots move randomized between 0.5-2 deg/sec.
+
+Dot speed (deg/sec). Or a vector [speed delta] setting speed +/- delta to randomize for each dot.
+
+
+
+----------
+dotLifetime    DEFAULT: [1 0.5] = dots last randomized between 0.5-1.5 sec.
+
+Dot lifetime (sec). inf = no limit. Or a vector [lifetime delta] setting lifetime +/- delta to randomize for each dot.
+
+
+
+----------
+dotSize    DEFAULT: 0.19 deg.
+
+Dot diameter (deg).
+
+
+
+----------
+color    DEFAULT: white.
+
+A 1x3 RGB vector with numbers between 0-1.
+
+
+
+----------
+INPUT PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- label     DEFAULT: none.
+Struct with any fields containing any values you want as custom information to see for the object in experiment results. Field names go to headings in results table. [] = none.
+
+- report    DEFAULT: none.
+Array of strings that are names of properties to see for the object in experiment results. [] = none.
+
+
+
+----------
+INPUT PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- start             DEFAULT: no start cues.
+Start time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no start cues -> element doesn't run.
+
+- end               DEFAULT: no end cues.
+End time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, duration, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no end cues -> element runs indefinitely unless it can end on its own.
+
+- startBuffer
+- endBuffer         DEFAULTS: none.
+Time buffer to start/end (sec) if bufferable start/end latency occurs. Only for experiments where precise timing is important.
+
+- syncExperimentAtTrigger
+Not used by this class.
+
+- staircase         DEFAULT: don't staircase element.
+Staircase one or more input properties of the element. Further struct or struct array with one or more fields: .target, setExpr, min, max, setStaircaseExpr. [] = don't staircase element.
+
+
+
+----------
+INPUT PROPERTIES ALL VISUAL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2.1 for full documentation. ***
+
+
+- position          DEFAULT: screen center.
+Vector [x y] setting position on screen (deg). - = left/up, + = right/down, [0 0] = screen center.
+
+- layer             DEFAULT: 0.
+Number setting layering on screen. + = backward.
+
+- nn_eyes           DEFAULT: both eyes.
+1 = show on left eye, 2 = right eye, [1 2] = both eyes. Ignored if stereo display is of (screen object property .stereo).
+
+- opacity           DEFAULT: no additional transparency.
+0-1: 0 = fully transparent, 1 = nominal. (Psychtoolbox framework only)
+
+- rotate
+- flipHorz
+- flipVert
+- blur
+- filterType
+- filterKernel
+- filterResolution
+- backColor
+Currently not implemented for this class.
+
+
+
+
+
+RECORD PROPERTIES
+PsychBench uses record properties to record information during experiments.
+You can't set record properties but you can see them in experiment results using input property .report.
+==========
+
+
+
+----------
+RECORD PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- who
+String: variable name and possibly index you used for the object in the experiment script, e.g. "pictures(2)".
+
+
+
+----------
+RECORD PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- startTime
+– endTime
+Start/End time relative to trial 1 start (sec).
+
+- duration
+End time - start time (sec).
+
+- n_startFrame
+- n_endFrame
+Frame number in the trial for first/last frames the element ran in. Start time = first frame start time. End time = last frame end time.
+
+- startLatencyBufferable
+- endLatencyBufferable
+Start/End delay that might be reducible by setting .startBuffer/.endBuffer (sec). Only for experiments where precise timing is important.
+
+- syncTime
+- trigger
+- triggerTime
+- d_triggerTime
+- n_triggerFrame
+- numTriggers
+Not used by this class.

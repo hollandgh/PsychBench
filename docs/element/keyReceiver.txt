@@ -1,0 +1,157 @@
+Waits to receive a key press signal, then registers a trigger and ends on its own. You can set any elements to start or end from the trigger (element properties .start/.end). You can also synchronize the experiment at the trigger using this element's .syncExperimentAtTrigger, then set any elements to start or end from sync (element properties .start/.end) and set later trials to start from sync (trial object property .start).
+
+Trigger value recorded in record property .trigger is key number. Key numbers depend on operating system and whether you are using the Psychtoolbox or MGL framework. In Psychtoolbox, function KBSHOW is a quick way to find them; see also Psychtoolbox KBNAME. In MGL, use function MGLSHOWKEYS; see also MGLCHARTOKEYCODE, MGLKEYCODETOCHAR.
+
+The main purpose of keyReceiver elements is to listen for synchronization signals from an external device like a scanner that arrive as if they came from the keyboard (e.g. through external mixing hardware). If you want to record key press responses from subject, use a keyPress element instead. There are a number of differences: A keyPress element polls for input once per frame, which means it can in theory miss the occasional short key press that falls between polls, and its time resolution is limited by frame rate (+/- 1/2 frame interval, e.g. 8 msec at 60 frames/sec). However, it is more flexible and allows functionality like response translation and scoring. A keyReceiver element never misses an input and may have slightly better time resolution.
+
+
+
+
+
+INPUT PROPERTIES
+You can set input properties to specify how an object will show or run.
+To leave any property at default, omit it (or leave = []).
+==========
+
+
+
+----------
+Adjustable properties
+
+You can allow the subject to adjust the following input properties of an object of this class during the experiment using an adjuster element. If you need to make other properties adjustable, you can edit the element class.
+
+(None)
+
+
+
+----------
+n_device    DEFAULT: default device.
+
+(Psychtoolbox framework only)
+
+HID device number to listen to. You can use Psychtoolbox functions GetKeyboardIndices or PsychHID('Devices') to see available device numbers. A keyReceiver element uses Psychtoolbox KbQueueCreate underneath and .n_device goes to the input of that function. See help for these functions for more information. [] = default device according to Psychtoolbox.
+
+
+
+----------
+nn_listenKeys    DEFAULT: listen to all keys.
+
+A row vector of key numbers to listen for. [] = all.
+
+
+
+----------
+numInputs    DEFAULT: 1.
+
+Number of key presses to wait for before registering a trigger. Key presses not allowed by .nn_listenKeys above are ignored.
+
+You can set .numInputs = inf to receive key presses indefinitely until the element ends on a cue you set in property .end. In this case it never registers a trigger.
+
+
+
+----------
+INPUT PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- label     DEFAULT: none.
+Struct with any fields containing any values you want as custom information to see for the object in experiment results. Field names go to headings in results table. [] = none.
+
+- report    DEFAULT: none.
+Array of strings that are names of properties to see for the object in experiment results. [] = none.
+
+
+
+----------
+INPUT PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- start             DEFAULT: no start cues.
+Start time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no start cues -> element doesn't run.
+
+- end               DEFAULT: no end cues.
+End time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, duration, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no end cues -> element runs indefinitely unless it can end on its own.
+
+- startBuffer
+- endBuffer         DEFAULTS: none.
+Time buffer to start/end (sec) if bufferable start/end latency occurs. Only for experiments where precise timing is important.
+
+- syncExperimentAtTrigger    DEFAULT: element doesn't sync experiment.
+true/false: sync the experiment when this element registers a trigger.
+
+- staircase         DEFAULT: don't staircase element.
+Staircase one or more input properties of the element. Further struct or struct array with one or more fields: .target, setExpr, min, max, setStaircaseExpr. [] = don't staircase element.
+
+
+
+
+
+RECORD PROPERTIES
+PsychBench uses record properties to record information during experiments.
+You can't set record properties but you can see them in experiment results using input property .report.
+==========
+
+
+
+----------
+data
+dataTime
+
+.data is a row vector of key presses received (key numbers). Just = record property .trigger if the element registers a trigger.
+
+.dataTime is a row vector of times key presses were received relative to trial 1 start (sec). Can be different from record property .triggerTime, which is time the last key press was received.
+
+
+
+----------
+RECORD PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- who
+String: variable name and possibly index you used for the object in the experiment script, e.g. "pictures(2)".
+
+
+
+----------
+RECORD PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- startTime
+– endTime
+Start/End time relative to trial 1 start (sec).
+
+- duration
+End time - start time (sec).
+
+- n_startFrame
+- n_endFrame
+Frame number in the trial for first/last frames the element ran in. Start time = first frame start time. End time = last frame end time.
+
+- startLatencyBufferable
+- endLatencyBufferable
+Start/End delay that might be reducible by setting .startBuffer/.endBuffer (sec). Only for experiments where precise timing is important.
+
+- syncTime
+Experiment synchronization time set by this element, relative to trial 1 start (sec). [] = none.
+
+- trigger
+Trigger value(s) registered.
+
+- triggerTime
+Trigger time(s) relative to trial 1 start (sec).
+
+- d_triggerTime
+Uncertainty in trigger time(s) if elements checks for trigger once per frame (sec). Range = +/- d_triggerTime.
+
+- n_triggerFrame
+Frame number in the trial when trigger(s) was registered.
+
+- numTriggers
+Number of triggers registered.

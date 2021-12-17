@@ -1,0 +1,261 @@
+Text from a variable or text file. Also optional text box. 
+
+NOTE: Currently text background is not transparent, so even if you don't use a text box, you must use property .boxColor to set background color.
+
+
+TEXT RENDERER
+You can change which text renderer Psychtoolbox uses with Screen('Preference', 'TextRenderer'). This has a significant effect on text quality and sometimes alignment. See Psychtoolbox Screen('DrawText') help for more information. Note on macOS, Psychtoolbox/PsychBench needs GStreamer installed for the high quality text renderer. See http://psychtoolbox.org/docs/GStreamer for more information.
+
+
+
+
+
+INPUT PROPERTIES
+You can set input properties to specify how an object will show or run.
+To leave any property at default, omit it (or leave = []).
+==========
+
+
+
+----------
+Adjustable properties
+
+You can allow the subject to adjust the following input properties of an object of this class during the experiment using an adjuster element. If you need to make other properties adjustable, you can edit the element class.
+
+position
+nn_eyes
+rotate
+opacity
+
+
+
+----------
+text
+fileName    DEFAULTS: no text.
+
+Set one of .text or .fileName:
+
+.text is a string that is text to show. Ignored if you set .fileName.
+
+OR
+
+.fileName is a string that is name of text file to show. Include path if the file is not in the MATLAB current folder or search path (or not the first file with that name on the search path).
+
+You can include the following anywhere in the text for line breaks and formatting changes.
+
+<n>            - new line (also see below)
+<b>            - bold 
+<i>            - italic 
+<u>            - underline (only on some systems and text renderers)
+<>             - regular, (end bold/italic/underline)
+<font = name>  - font, e.g. <font = Arial>
+<fontSize = n> - font size (deg), e.g. <fontSize = 0.8>
+<color = RGB>  - color. RGB = a 1x3 RGB vector with numbers between 0-1, e.g. <color = [1 0 0]>.
+
+For new line you can use an array of strings with each cell containing a line (property .text only), <n> above, character code 10, or property .wrapWidth to wrap lines automatically.
+
+
+
+----------
+wrapWidth      DEFAULT: don't wrap lines.
+
+Number of characters to wrap lines at. inf = don't wrap, but you can still use an array of strings, <n>, or char(10) to wrap lines manually.
+
+
+
+----------
+fontName    DEFAULT: Arial.
+
+A string setting font. See Psychtoolbox Screen('TextFont') for more information on font names.
+
+
+
+----------
+fontSize    DEFAULT: 0.7 deg.
+
+This sets font size by setting line height which the font scales to (deg), not including any change in spacing from .lineSpacing below. This is equivalent to setting height of the "em box" the font characters are based in. See Wikipedia https://en.wikipedia.org/wiki/Point_(typography) for a starting point. Characters (upper case) are usually a bit smaller than this.
+
+
+
+----------
+style    DEFAULT: regular.
+
+A string "r" = regular, "b" = bold, "i" = italic, or "u" = underline.
+
+
+
+----------
+color    DEFAULT: white.
+
+A 1x3 RGB vector with numbers between 0-1.
+
+
+
+----------
+alignment    DEFAULT: center text horizontally.
+
+A string "l" = left or "c" = center to horizontally align lines.
+
+
+
+----------
+lineSpacing    DEFAULT: 1.3-spaced.
+
+A number: 1 = single-spaced, 2 = double, 1.5 = 1 & 1/2, etc. 1 = each line's baseline is precisely .fontSize distant from the next one's.
+
+
+
+----------
+boxSize    DEFAULT: no text box.
+margin     DEFAULT: 0.4 deg.
+
+.boxSize is a vector [width height] setting text box dimensions (deg). Or a string "f" = fit box to text. Number 0 = no box (but .boxColor above still sets text background color).
+
+If you use a box and align text left or top, or fit the box to text, .margin sets box margin (deg).
+
+
+
+----------
+boxColor    DEFAULT: black text box/background.
+
+A 1x3 RGB vector with numbers between 0-1 setting text box/background color.
+
+NOTE: Currently text background is not transparent, so even if you don't use a text box, you must still use this property to set background color.
+
+
+
+----------
+vertAlignment    DEFAULT: center text vertically
+
+A string "t" = top or "c" = center to vertically align text in text box.
+
+
+
+----------
+INPUT PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- label     DEFAULT: none.
+Struct with any fields containing any values you want as custom information to see for the object in experiment results. Field names go to headings in results table. [] = none.
+
+- report    DEFAULT: none.
+Array of strings that are names of properties to see for the object in experiment results. [] = none.
+
+
+
+----------
+INPUT PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- start             DEFAULT: no start cues.
+Start time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no start cues -> element doesn't run.
+
+- end               DEFAULT: no end cues.
+End time/cue(s) in the trial for the element. Further struct or struct array with one or more fields: .t, timeFromSync, duration, startOf, endOf, response, responseBy, trigger, triggerBy, and, timeFrom. [] = no end cues -> element runs indefinitely unless it can end on its own.
+
+- startBuffer
+- endBuffer         DEFAULTS: none.
+Time buffer to start/end (sec) if bufferable start/end latency occurs. Only for experiments where precise timing is important.
+
+- syncExperimentAtTrigger
+Not used by this class.
+
+- staircase         DEFAULT: don't staircase element.
+Staircase one or more input properties of the element. Further struct or struct array with one or more fields: .target, setExpr, min, max, setStaircaseExpr. [] = don't staircase element.
+
+
+
+----------
+INPUT PROPERTIES ALL VISUAL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2.1 for full documentation. ***
+
+
+- position          DEFAULT: screen center.
+Vector [x y] setting position on screen (deg). - = left/up, + = right/down, [0 0] = screen center.
+
+- layer             DEFAULT: 0.
+Number setting layering on screen. + = backward.
+
+- nn_eyes           DEFAULT: both eyes.
+1 = show on left eye, 2 = right eye, [1 2] = both eyes. Ignored if stereo display is of (screen object property .stereo).
+
+- rotate            DEFAULT: 0 deg.
+Rotation clockwise (+x -> +y screen axis) about position set in .position (deg). (Psychtoolbox framework only)
+
+- flipHorz
+- flipVert          DEFAULTS: don't flip.
+true/false: flip horizontally/vertically. (Psychtoolbox framework only)
+
+- opacity           DEFAULT: no additional transparency.
+0-1: 0 = fully transparent, 1 = nominal. (Psychtoolbox framework only)
+
+- blur              DEFAULT: don't blur.
+Blur filter level: width/diameter (box/disk) or standard deviation (Gaussian) of filter kernel on screen (deg). 0 = no blur. Ignored if .filterKernel set. (Psychtoolbox framework only)
+
+- filterType        DEFAULT: Gaussian.
+Blur filter type. String: "box", "disc", "gaussian". (Psychtoolbox framework only)
+
+- filterKernel      DEFAULT: ignored.
+Matrix: Custom convolution filter kernel. If you set .filterResolution then this is in the downsampled space. [] = use .blur instead instead. (Psychtoolbox framework only)
+
+- filterResolution  DEFAULT: filter applied at screen resolution.
+0-1: 1 = apply blur or other filter to element display at resolution on screen. < 1 = apply at lower resolution, then scale to screen. (Psychtoolbox framework only)
+
+- backColor         DEFAULT: black.
+RGB vector with numbers between 0-1 setting element background color if blur/filter is on. Ignored if blur/filter is off (most elements have transparent background then). (Psychtoolbox framework only)
+
+
+
+
+
+RECORD PROPERTIES
+PsychBench uses record properties to record information during experiments.
+You can't set record properties but you can see them in experiment results using input property .report.
+==========
+
+
+
+----------
+RECORD PROPERTIES ALL OBJECTS HAVE
+
+*** See PsychBench Reference Manual sec 1 for full documentation. ***
+
+
+- who
+String: variable name and possibly index you used for the object in the experiment script, e.g. "pictures(2)".
+
+
+
+----------
+RECORD PROPERTIES ALL ELEMENTS HAVE
+
+*** See PsychBench Reference Manual sec 2 for full documentation. ***
+
+
+- startTime
+– endTime
+Start/End time relative to trial 1 start (sec).
+
+- duration
+End time - start time (sec).
+
+- n_startFrame
+- n_endFrame
+Frame number in the trial for first/last frames the element ran in. Start time = first frame start time. End time = last frame end time.
+
+- startLatencyBufferable
+- endLatencyBufferable
+Start/End delay that might be reducible by setting .startBuffer/.endBuffer (sec). Only for experiments where precise timing is important.
+
+- syncTime
+- trigger
+- triggerTime
+- d_triggerTime
+- n_triggerFrame
+- numTriggers
+Not used by this class.
