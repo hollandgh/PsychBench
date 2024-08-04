@@ -1,1 +1,1 @@
-Code for open source experiment building tools that come with PsychBench. See Contents.m for summary.
+Code for open source tools for experiment building that come with PsychBench. See Contents.m for summary.
