@@ -1,4 +1,4 @@
-This repository contains all code for the open source parts of PsychBench. This is intended for people who want to contribute to this code. It is not necessary to to pull from here to actually install or use PsychBench--for that see the standard installer at [www.psychbench.org](https://www.psychbench.org).
+This repository contains all code for the open source parts of PsychBench. This is intended for people who want to contribute to this code. It is not necessary to pull from here to actually install or use PsychBench--for that see the standard installer at [www.psychbench.org](https://www.psychbench.org).
 
 These folders mirror folders in any local PsychBench installation:
 
