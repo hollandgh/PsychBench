@@ -1,0 +1,1 @@
+warningOnce('clear', 'keyPress:defaultKeyboard')
