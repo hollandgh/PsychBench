@@ -1,1 +1,0 @@
-warningOnce('clear', 'keyPress:defaultKeyboard')
