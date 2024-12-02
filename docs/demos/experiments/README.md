@@ -1,1 +1,1 @@
-Example experiment code
+Example experiments in the coding method
