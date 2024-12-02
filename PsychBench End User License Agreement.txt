@@ -1,4 +1,4 @@
-PSYCHBENCH 2024.08.04 (132551) beta END USER LICENSE AGREEMENT
+PSYCHBENCH 2024.12.01 (220953) beta END USER LICENSE AGREEMENT
 
 
 
@@ -15,13 +15,13 @@ documentation in <PsychBench folder>/docs/ and www.psychbench.org/docs/.
 The core excludes all element types and their corresponding documentation (see
 below).
 
-The core is Copyright © 2017-2024 Giles Holland ("the author").
+The core is Copyright © 2017-2025 Giles Holland ("the author").
 
 The core is licensed to you as freeware under the following conditions:
 
 a. You may use the core free of charge.
 
-b. This version of the core will expire at the end of 2024. If you wish to 
+b. This version of the core will expire at the end of 2025. If you wish to 
 continue using the core after then you must download an update. You can check 
 for updates using the function pb_update in PsychBench.
 
@@ -73,7 +73,7 @@ Standard element types are licensed to you as free and open-source software
 under the MIT license:
 
 --- (MIT License - https://opensource.org/licenses/MIT)
-Copyright © 2017-2024 Giles Holland ("the author")
+Copyright © 2017-2025 Giles Holland ("the author")
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of the standard element types, to deal in them without restriction,
