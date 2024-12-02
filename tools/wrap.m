@@ -14,7 +14,7 @@ function x = wrap(x, n)
 % WRAP(540, 360) -> 180
 % 
 % 
-% See also wrapInteger.
+% See also wrapInteger, circshift.
 
 
 % Giles Holland 2022

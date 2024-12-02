@@ -44,9 +44,9 @@ function images2movie(movieFileName, frameRate, movieWidth, movieWidthSnap, movi
 %     DEFAULT: 1 (don't snap)
 % 
 % [movieOptions]
-%     A string that goes to input "movieOptions" of Psychtoolbox <a href="matlab:web('http://psychtoolbox.org/docs/Screen-CreateMovie', '-browser')">Screen('CreateMovie')</a> 
-%     setting advanced options. See help text there and <a href="matlab:web('http://psychtoolbox.org/docs/VideoRecording', '-browser')">help VideoRecording</a> for 
-%     usage.
+%     A string (" or ') that goes to input "movieOptions" of Psychtoolbox 
+%     <a href="matlab:web('http://psychtoolbox.org/docs/Screen-CreateMovie', '-browser')">Screen('CreateMovie')</a> setting advanced options. See help text there and 
+%     <a href="matlab:web('http://psychtoolbox.org/docs/VideoRecording', '-browser')">help VideoRecording</a> for usage.
 % 
 %     DEFAULT: none
 

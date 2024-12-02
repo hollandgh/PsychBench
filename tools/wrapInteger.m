@@ -15,7 +15,7 @@ function x = wrapInteger(x, n)
 % WRAPINTEGER(8, 3) -> 2
 % 
 % 
-% See also wrap.
+% See also wrap, circshift.
 
 
 % Giles Holland 2022
