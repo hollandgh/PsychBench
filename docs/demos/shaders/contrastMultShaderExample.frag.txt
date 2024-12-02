@@ -1,0 +1,18 @@
+/* Multiplies pixel values relative to a mean value, clamps to 0-1, leaves alpha unchanged */
+
+#extension GL_ARB_texture_rectangle : enable
+
+uniform sampler2DRect texture;
+uniform float contrastMult;
+uniform float meanIntensity;
+
+void main()
+{
+    vec4 tx;
+
+    tx = texture2DRect(texture, gl_TexCoord[0].xy);
+    tx.rgb = (tx.rgb-meanIntensity)*contrastMult+meanIntensity;
+    tx.rgb = clamp(tx.rgb, 0.0, 1.0);
+
+    gl_FragColor = tx;
+}
