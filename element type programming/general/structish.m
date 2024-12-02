@@ -44,7 +44,6 @@ end
 if isempty(varargin)
     varargin = {[1 1]};
 end
-siz = varargin;
 
 
 fieldNames = var2char(fieldNames, '-c');
@@ -52,19 +51,14 @@ fieldNames = var2char(fieldNames, '-c');
         error('Field names must be an array of strings')
     end
     
-    if  ~( ...
-        numel(siz) == 1 && isRowNum(siz{1}) || ...
-        all(cellfun(@(x) isOneNum(x),    siz)) ...
-        )
-    
-        error('Size must be one input that is a row array of integers >= 0, or multiple inputs that are integers >= 0.')
+siz = varargin;
+    if ~(numel(siz) == 1 && isRowNum(siz{1}) || all(cellfun(@(x) isOneNum(x),    siz)))
+        error('Size must be one input that is a row vector of integers >= 0, or multiple inputs that are integers >= 0.')
     end
 siz = [siz{:}];
     if ~all(isIntegerVal(siz) & siz >= 0)
-        error('Size must be one input that is a row array of integers >= 0, or multiple inputs that are integers >= 0.')
+        error('Size must be one input that is a row vector of integers >= 0, or multiple inputs that are integers >= 0.')
     end
-
-
 if numel(siz) == 1
     if siz == 0 %#ok<BDSCI>
         siz = [0 0];
@@ -72,6 +66,8 @@ if numel(siz) == 1
         siz = [1 siz];
     end
 end
+
+
 if isempty(fieldNames)
     x = repmat(struct, siz);
 else
