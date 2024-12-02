@@ -3,8 +3,11 @@ This repository contains all code for the open source parts of PsychBench. This 
 These folders mirror folders in any local PsychBench installation:
 
 /element types - code for element types that come with PsychBench
+
 /tools - code for tools for experiment building
+
 /element type programming/general - code for general tools for element type programming
+
 /demos - examples and demos
 
 See README.md files in each folder for summaries of their contents.
