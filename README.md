@@ -8,7 +8,7 @@ These folders mirror folders in any local PsychBench installation:
 
 /element type programming/general - code for general tools for element type programming
 
-/demos - examples and demos
+/demos - example experiments in the coding method
 
 See README.md files in each folder for summaries of their contents.
 
