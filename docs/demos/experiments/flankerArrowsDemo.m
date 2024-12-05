@@ -59,13 +59,13 @@ for n_targetArrow = 1:2
             trial.info.flankerArrowName = arrowNames(n_flankerArrow);
             
         if      n_flankerArrow == 3
-            trial.info.n_condition = 2;
+            trial.info.n_condition = 0;
             trial.info.conditionName = "neutral";
         elseif  n_targetArrow == n_flankerArrow
-            trial.info.n_condition = 1;
+            trial.info.n_condition = +1;
             trial.info.conditionName = "congruent";
         else
-            trial.info.n_condition = 0;
+            trial.info.n_condition = -1;
             trial.info.conditionName = "incongruent";
         end
         % ---
@@ -131,7 +131,7 @@ for n_targetArrow = 1:2
             response.start.t = 0;
             % By default keyPress elements end when they record a response -> don't need to set .end
 
-            % See response, score, response latency in results
+            % See response, score, latency in results
             response.report = ["response" "responseScore" "responseLatency"];
         % ---
         
@@ -146,23 +146,23 @@ end
 
 % INTRO TRIAL
 % ==========
-% Use standard template for a trial that shows a message until the subject presses any key.
-% Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
-%
-% <text>.text           = "Press any key to continue...";
-% <text>.fontSize       = 0.7;
-% <text>.wrapWidth      = 60;
-% <text>.start.t        = 0;
-% <text>.end.response	= true;
-%
-% <keyPress>.start.t    = 0;
-[text, anyKey] = getTemplate("keyMessage");
+    % Use standard template for a trial that shows a message until the subject presses any key.
+    % Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
+    %
+    % <text>.text           = "Press any key to continue...";
+    % <text>.fontSize       = 0.7;
+    % <text>.wrapWidth      = 60;
+    % <text>.start.t        = 0;
+    % <text>.end.response	= true;
+    %
+    % <keyPress>.start.t    = 0;
+    [text, anyKey] = getTemplate("keyMessage");
 
-% Change to instructions text
-text.text = "Look at the arrow in the middle and press the arrow key corresponding to it: left or right. Try to ignore the shapes on the sides. Respond as fast as you can while still trying to answer correctly.";
+    % Change to instructions text
+    text.text = "Look at the arrow in the middle and press the arrow key corresponding to it: left or right. Try to ignore the shapes on the sides. Respond as fast as you can while still trying to be correct.";
 
-% Add trial definition with name "intro"
-addTrial(text, anyKey, "intro");
+    % Add trial definition with name "intro"
+    addTrial(text, anyKey, "intro");
 % ==========
 
 

@@ -21,72 +21,72 @@ newExperiment
 
 % TRIAL TEMPLATE
 % ==========
-% Make objects and set only properties that will be the same in all trials where we will use the template...
+    % Make objects and set only properties that will be the same in all trials where we will use the template...
 
 
-% Fixation cross
-% ---
-cross = crossObject;
+    % Fixation cross
+    % ---
+    cross = crossObject;
 
-% Leave properties at default for a small white cross
+    % Leave properties at default for a small white cross
 
-% Run in pre-trial interval
-cross.start.pretrial = true;
-% ---
-
-
-% Square
-% ---
-square = rectangleObject;
-
-% 5 deg square
-square.size = 5;
-
-% Start at trial start; End at response
-square.start.t = 0;
-square.end.response = true;
-% ---
+    % Run in pre-trial interval
+    cross.start.pretrial = true;
+    % ---
 
 
-% Key press response handler
-% ---
-anyKey = keyPressObject;
+    % Square
+    % ---
+    square = rectangleObject;
 
-% Leave .listenKeyNames at default = listen for any key
+    % 5 deg square
+    square.size = 5;
 
-% Record response = NaN if no response before object ends so feedback below will also start at no response
-anyKey.recordDefaultResponse = true;
-
-% Start at trial start
-anyKey.start.t = 0;
-% End at duration = 1 sec -> time limit for response
-anyKey.end.duration = 1;
-% By default keyPress elements also end when they record one response
-% ---
+    % Start at trial start; End at response
+    square.start.t = 0;
+    square.end.response = true;
+    % ---
 
 
-% Feedback
-% ---
-% Use standard template for correct/incorrect feedback text.
-% Gets a 1x2 array of text objects (correct, incorrect) with relevant properties pre-set, which you can tweak and/or add to if needed:
-%
-% (1).text              = "CORRECT";
-% (1).color             = [0.7 1 0.7];
-% (1).start.response    = true;
-% (1).start.and         = "responseScore == true";
-% (1).end.duration      = 1;
-% 
-% (2).text              = "INCORRECT";
-% (2).color             = [1 0.7 0.7];
-% (2).start.response    = true;
-% (2).start.and         = "responseScore == false";
-% (2).end.duration      = 1;
-feedbacks = getTemplate("feedbackText");
-% ---
+    % Key press response handler
+    % ---
+    anyKey = keyPressObject;
+
+    % Leave .listenKeyNames at default = listen for any key
+
+    % Record response = NaN if no response before object ends so feedback below will also start at no response
+    anyKey.recordDefaultResponse = true;
+
+    % Start at trial start
+    anyKey.start.t = 0;
+    % End at duration = 1 sec -> time limit for response
+    anyKey.end.duration = 1;
+    % By default keyPress elements also end when they record one response
+    % ---
 
 
-% Add template with name "trial"
-addTemplate(cross, square, anyKey, feedbacks, "trial");
+    % Feedback
+    % ---
+    % Use standard template for correct/incorrect feedback text.
+    % Gets a 1x2 array of text objects (correct, incorrect) with relevant properties pre-set, which you can tweak and/or add to if needed:
+    %
+    % (1).text              = "CORRECT";
+    % (1).color             = [0.7 1 0.7];
+    % (1).start.response    = true;
+    % (1).start.and         = "responseScore == true";
+    % (1).end.duration      = 1;
+    % 
+    % (2).text              = "INCORRECT";
+    % (2).color             = [1 0.7 0.7];
+    % (2).start.response    = true;
+    % (2).start.and         = "responseScore == false";
+    % (2).end.duration      = 1;
+    feedbacks = getTemplate("feedbackText");
+    % ---
+
+
+    % Add template with name "trial"
+    addTemplate(cross, square, anyKey, feedbacks, "trial");
 % ==========
 
 
@@ -132,7 +132,7 @@ for n_color = 1:2
         anyKey.scoreResponse = "~isnan(response)";
     end
 
-        % See response, score, response latency in results
+        % See response, score, latency in results
         anyKey.report = ["response" "responseScore" "responseLatency"];
     % ---
 
@@ -189,15 +189,16 @@ for n_color = 1:2
     
     % Change text for incorrect feedback.
     % Strings in an array are separate lines.
+    % We use an in-line formatting command to change size for the second line (see text type documentation).
     if n_color == 1
         feedbacks(2).text = [
             "INCORRECT"
-            "Remember only press a key when the blue square appears..."
+            "<size = 0.7>Remember only press a key when you see the blue square..."
             ];
     else
         feedbacks(2).text = [
             "INCORRECT"
-            "Remember press a key when the blue square appears..."
+            "<size = 0.7>Remember press a key when you see the blue square..."
             ];
     end
     % ---
@@ -212,38 +213,40 @@ end
 
 % INTRO, PAUSE TRIALS
 % ==========
-% Use standard template for a trial that shows a message until the subject presses any key.
-% Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
-%
-% <text>.text           = "Press any key to continue...";
-% <text>.fontSize       = 0.7;
-% <text>.wrapWidth      = 60;
-% <text>.start.t        = 0;
-% <text>.end.response	= true;
-%
-% <keyPress>.start.t    = 0;
-[text, anyKey] = getTemplate("keyMessage");
+    % Use standard template for a trial that shows a message until the subject presses any key.
+    % Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
+    %
+    % <text>.text           = "Press any key to continue...";
+    % <text>.fontSize       = 0.7;
+    % <text>.wrapWidth      = 60;
+    % <text>.start.t        = 0;
+    % <text>.end.response	= true;
+    %
+    % <keyPress>.start.t    = 0;
+    [text, anyKey] = getTemplate("keyMessage");
 
-% Change to instructions text.
-% Each string in the array is a new line.
-% Use in-line formatting options (color).
-text.text = [
-    "Press a key only when you see the <color = [0 0 1]>BLUE<color = [1 1 1]> square."
-    "Let's start with a few tries to get the hang of it..."
-    "Press any key to start--"
-    ];
+    % Change to instructions text.
+    % Each string in the array is a new line.
+    % Use in-line formatting options (color).
+    text.text = [
+        "Press a key as fast as you can when you see the <color = [0 0 1]>BLUE<color = [1 1 1]> square."
+        "Let's start with a few tries to get the hang of it..."
+        "Press any key to start--"
+        ];
 
-% Add trial definition with name "intro"
-addTrial(text, anyKey, "intro");
+    % Add trial definition with name "intro"
+    addTrial(text, anyKey, "intro");
+    % ---
 
 
 
-[text, anyKey] = getTemplate("keyMessage");
+    [text, anyKey] = getTemplate("keyMessage");
 
-text.text = "Okay! Now let's try it for real...";
+    text.text = "Okay! Now let's try it for real...";
 
-%Add trial definition with name "pause"
-addTrial(text, anyKey, "pause");
+    %Add trial definition with name "pause"
+    addTrial(text, anyKey, "pause");
+    % ---
 % ==========
 
 

@@ -36,7 +36,7 @@ newExperiment
 % TASK TRIALS
 % ==========
 
-%Define 5 RGB colors and color names
+% Define 5 RGB colors and color names
 colors = [
     0.5 0.8 0.5
     0.8 0.5 0.5
@@ -65,15 +65,15 @@ for n_targetColor = [1 2 4 5]
             trial.info.flankerColor = colors(n_flankerColor,:);
             
         if      n_flankerColor == 3
-            trial.info.n_condition = 2;
+            trial.info.n_condition = 0;
             trial.info.conditionName = "neutral";
         elseif  ismember(n_targetColor, [1 2]) && ismember(n_flankerColor, [1 2]) || ...
                 ismember(n_targetColor, [3 4]) && ismember(n_flankerColor, [3 4])
             
-            trial.info.n_condition = 1;
+            trial.info.n_condition = +1;
             trial.info.conditionName = "congruent";
         else
-            trial.info.n_condition = 0;
+            trial.info.n_condition = -1;
             trial.info.conditionName = "incongruent";
         end
         % ---
@@ -139,8 +139,8 @@ for n_targetColor = [1 2 4 5]
             response.start.t = 0;
             % By default keyPress elements end when they record a response -> don't need to set .end
 
-            % See response, score, response latency in results
-            response.report = ["response" "responseScore" "responseLatency"];
+            % See response, correct response, score, latency in results
+            response.report = ["response" "correctResponse" "responseScore" "responseLatency"];
         % ---
         
         
@@ -154,24 +154,24 @@ end
 
 % INTRO TRIAL
 % ==========
-% Use standard template for a trial that shows a message until the subject presses any key.
-% Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
-%
-% <text>.text           = "Press any key to continue...";
-% <text>.fontSize       = 0.7;
-% <text>.wrapWidth      = 60;
-% <text>.start.t        = 0;
-% <text>.end.response	= true;
-%
-% <keyPress>.start.t    = 0;
-[text, anyKey] = getTemplate("keyMessage");
+    % Use standard template for a trial that shows a message until the subject presses any key.
+    % Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
+    %
+    % <text>.text           = "Press any key to continue...";
+    % <text>.fontSize       = 0.7;
+    % <text>.wrapWidth      = 60;
+    % <text>.start.t        = 0;
+    % <text>.end.response	= true;
+    %
+    % <keyPress>.start.t    = 0;
+    [text, anyKey] = getTemplate("keyMessage");
 
-% Change to instructions text.
-% Use in-line formatting options (color).
-text.text = "Look at the square in the middle and press the left arrow key if it is <color = [0.5 0.8 0.5]>green<color = [1 1 1]> OR <color = [0.8 0.5 0.5]>red<color = [1 1 1]>, or the right arrow key if it is <color = [0.5 0.5 0.8]>blue<color = [1 1 1]> OR <color = [0.9 0.4 0.2]>orange<color = [1 1 1]>. Try to ignore the squares on the sides. Respond as fast as you can while still trying to answer correctly.";
+    % Change to instructions text.
+    % Use in-line formatting options (color).
+    text.text = "Look at the square in the middle and press the left arrow key if it is <color = [0.5 0.8 0.5]>green<color = [1 1 1]> OR <color = [0.8 0.5 0.5]>red<color = [1 1 1]>, or the right arrow key if it is <color = [0.5 0.5 0.8]>blue<color = [1 1 1]> OR <color = [0.9 0.4 0.2]>orange<color = [1 1 1]>. Try to ignore the squares on the sides. Respond as fast as you can while still trying to be correct.";
 
-% Add trial definition with name "intro"
-addTrial(text, anyKey, "intro");
+    % Add trial definition with name "intro"
+    addTrial(text, anyKey, "intro");
 % ==========
 
 

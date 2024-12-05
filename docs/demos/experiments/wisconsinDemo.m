@@ -127,99 +127,100 @@ refCardPositions = [
 
 % TRIAL TEMPLATE
 % ==========
-% Make objects and set only properties that will be the same in all trials where we will use the template...
+    % Make objects and set only properties that will be the same in all trials where we will use the template...
 
 
-% Test card
-% ---
-    testCard = pictureObject;
+    % Test card
+    % ---
+        testCard = pictureObject;
 
-    % position centered horizontally, 4 deg up
-    testCard.position = [0 -4];
+        % Position centered horizontally, 4 deg up
+        testCard.position = [0 -4];
 
-    % 5 deg height
-    testCard.height = 5;
+        % 5 deg height
+        testCard.height = 5;
 
-    % Start at trial start; End at response
-    testCard.start.t = 0;
-    testCard.end.response = true;
-% ---
-
-
-%Reference cards
-% ---
-    % 1x4 array of picture objects
-    refCards = pictureObject(4);
-for n = 1:4
-    % Get file name from file names array using number, color, shape indexes
-    refCards(n).fileName = fileNames(nn_refCards(n,1),nn_refCards(n,2),nn_refCards(n,3));
-
-    % Get position from positions matrix
-    refCards(n).position = refCardPositions(n,:);
-
-    refCards(n).height = 5;
-
-    refCards(n).start.t = 0;
-    refCards(n).end.response = true;
-end
-% ---
+        % Start at trial start; End at response
+        testCard.start.t = 0;
+        testCard.end.response = true;
+    % ---
 
 
-% Mouse click response
-% ---
-response = mouseClickObject;
+    %Reference cards
+    % ---
+        % 1x4 array of picture objects
+        refCards = pictureObject(4);
+    for n = 1:4
+        % Get file name from file names array using number, color, shape indexes
+        refCards(n).fileName = fileNames(nn_refCards(n,1),nn_refCards(n,2),nn_refCards(n,3));
 
-% Define 4 areas on screen that can be clicked.
-% Centers = reference card positions, sizes [width height] = reference card sizes -> effect of click on reference cards.
-% Possible response values = area #s = reference card #s.
-response.areaPositions = refCardPositions;
-response.areaSize = [3.55 5];
+        % Get position from positions matrix
+        refCards(n).position = refCardPositions(n,:);
 
-% Score correct/incorrect
-response.scoreResponse = true;
+        refCards(n).height = 5;
 
-% Start at trial start
-response.start.t = 0;
-% By default mouseClick elements end when they record a response -> don't need to set .end
-% ---
-
-
-% Feedback
-% ---
-% Use standard template for correct/incorrect feedback text.
-% Gets a 1x2 array of text objects (correct, incorrect) with relevant properties pre-set, which you can tweak and/or add to if needed:
-%
-% (1).text              = "CORRECT";
-% (1).color             = [0.7 1 0.7];
-% (1).start.response    = true;
-% (1).start.and         = "responseScore == true";
-% (1).end.duration      = 1;
-% 
-% (2).text              = "INCORRECT";
-% (2).color             = [1 0.7 0.7];
-% (2).start.response    = true;
-% (2).start.and         = "responseScore == false";
-% (2).end.duration      = 1;
-feedbacks = getTemplate("feedbackText");
-% ---
+        refCards(n).start.t = 0;
+        refCards(n).end.response = true;
+    end
+    % ---
 
 
-% Trial object
-% ---
-trial = trialObject;
+    % Mouse click response
+    % ---
+    response = mouseClickObject;
 
-% (All properties will be specific to trial -> nothing more to set in template here)
-% ---
+    % Define 4 areas on screen that can be clicked.
+    % Centers = reference card positions, sizes [width height] = reference card sizes -> effect of click on reference cards.
+    % Possible response values = area #s = reference card #s.
+    response.areaPositions = refCardPositions;
+    response.areaSize = [3.55 5];
+
+    % Score correct/incorrect
+    response.scoreResponse = true;
+
+    % Start at trial start
+    response.start.t = 0;
+    % By default mouseClick elements end when they record a response -> don't need to set .end
+    % ---
 
 
-% Add template with name "trial"
-addTemplate(testCard, refCards, response, feedbacks, trial, "trial");
+    % Feedback
+    % ---
+    % Use standard template for correct/incorrect feedback text.
+    % Gets a 1x2 array of text objects (correct, incorrect) with relevant properties pre-set, which you can tweak and/or add to if needed:
+    %
+    % (1).text              = "CORRECT";
+    % (1).color             = [0.7 1 0.7];
+    % (1).start.response    = true;
+    % (1).start.and         = "responseScore == true";
+    % (1).end.duration      = 1;
+    % 
+    % (2).text              = "INCORRECT";
+    % (2).color             = [1 0.7 0.7];
+    % (2).start.response    = true;
+    % (2).start.and         = "responseScore == false";
+    % (2).end.duration      = 1;
+    feedbacks = getTemplate("feedbackText");
+    % ---
+
+
+    % Trial object
+    % ---
+    trial = trialObject;
+
+    % (All properties not left at default will be specific to trial -> nothing more to set in template here)
+    % ---
+
+
+    % Add template with name "trial"
+    addTemplate(testCard, refCards, response, feedbacks, trial, "trial");
 % ==========
 
 
 
 % TASK TRIALS
 % ==========
+
 % Generate 64x3 matrix with rows = all possible combinations of 1-4 in each column.
 % This can be done with tool setprod() in <PsychBench folder>/tools.
 % -> 64x3 matrix with rows containing [number, color, shape] indexes to fileNames above.
@@ -236,7 +237,7 @@ ruleNames = ["number" "color" "shape"];
 % Generate 1x6 vector match rule indexes with each match rule appearing x2, all in random order.
     nn_rules_test = randomOrder(rep(1:3, 2));
 % Constrain that match rule must change each time.
-% There is probably an elegant way to do this but may as well do by brute force: just try random orders until get one that works.
+% There is probably an elegant way to do this but may as well do by brute force: just try random orders until get one that works...
 while any(nn_rules_test(1:end-1) == nn_rules_test(2:end))
     disp('.')
     nn_rules_test = randomOrder(rep(1:3, 2));
@@ -295,7 +296,7 @@ for n_rule = nn_rules_test
             response.correctResponse = find(nn_refCards(:,3) == n_testCard(3), 1);
         end
         
-        % See response, score, response latency in results
+        % See response, correct response, score, latency in results
         response.report = ["response" "correctResponse" "responseScore" "responseLatency"];
         % ---
         
@@ -306,7 +307,7 @@ for n_rule = nn_rules_test
         % ---
         
         
-        % Feedback
+        % Trial object
         % ---
         % Set some information to see in experiment results output at trial level, not specific to any one element object
         trial.info.n_rule = n_rule;
@@ -323,8 +324,9 @@ end
 
 
 % TRAINING TRIALS
-% Same as task trial definitions except no experiment results output
 % ==========
+% Same as task trial definitions except no experiment results output...
+
 % Use 10 random test cards
 nn_cards_test = setprod(1:4, 1:4, 1:4);
 nn_cards_test = randomChoose(nn_cards_test, 10, 1);
@@ -333,97 +335,99 @@ nn_cards_test = randomChoose(nn_cards_test, 10, 1);
 n_rule = randomChoose(1:3);
 
 % 10 trial definitions numbered 101-110: 1 rule x 10 trial definitions, 10 test cards distributed across them
-        i_testCard = 0;
-    for n_rep = 1:10
-        i_testCard = i_testCard+1;
+    i_testCard = 0;
+for n_rep = 1:10
+    i_testCard = i_testCard+1;
 
-        n_testCard = nn_cards_test(i_testCard,:);
-
-        
-        [testCard, refCards, response, feedbacks, trial] = getTemplate("trial");
-    
-    
-        % Feedback
-        % ---
-        % (Nothing to add)
-        % ---
+    n_testCard = nn_cards_test(i_testCard,:);
 
 
-        % Test card
-        % ---
-        testCard.fileName = fileNames(n_testCard(1),n_testCard(2),n_testCard(3));
-        % ---
+    [testCard, refCards, response, feedbacks, trial] = getTemplate("trial");
 
 
-        % Reference cards
-        % ---
-        % (Nothing to add)
-        % ---
+    % Test card
+    % ---
+    testCard.fileName = fileNames(n_testCard(1),n_testCard(2),n_testCard(3));
+    % ---
 
 
-        % Mouse click response
-        % ---
-        if      n_rule == 1
-            response.correctResponse = find(nn_refCards(:,1) == n_testCard(1), 1);
-        elseif  n_rule == 2
-            response.correctResponse = find(nn_refCards(:,2) == n_testCard(2), 1);
-        else    % 3
-            response.correctResponse = find(nn_refCards(:,3) == n_testCard(3), 1);
-        end
-        % ---
-        
-        
-        % Feedback
-        % ---
-        % (Nothing to add)
-        % ---
-        
-        
-        % Add trial definition to group 100 (101, 102, 103, ...)
-        addTrial(testCard, refCards, response, feedbacks, trial, 100);
+    % Reference cards
+    % ---
+    % (Nothing to add)
+    % ---
+
+
+    % Mouse click response
+    % ---
+    if      n_rule == 1
+        response.correctResponse = find(nn_refCards(:,1) == n_testCard(1), 1);
+    elseif  n_rule == 2
+        response.correctResponse = find(nn_refCards(:,2) == n_testCard(2), 1);
+    else    % 3
+        response.correctResponse = find(nn_refCards(:,3) == n_testCard(3), 1);
     end
+    % ---
+
+
+    % Feedback
+    % ---
+    % (Nothing to add)
+    % ---
+
+
+    % Trial object
+    % ---
+    % (Nothing to add)
+    % ---
+
+
+    % Add trial definition to group 100 (101, 102, 103, ...)
+    addTrial(testCard, refCards, response, feedbacks, trial, 100);
+end
 % ==========
 
 
 
 % INTRO, PAUSE TRIALS
 % ==========
-% Use standard template for a trial that shows a message until the subject presses any key.
-% Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
-%
-% <text>.text           = "Press any key to continue...";
-% <text>.fontSize       = 0.7;
-% <text>.wrapWidth      = 60;
-% <text>.start.t        = 0;
-% <text>.end.response	= true;
-%
-% <keyPress>.start.t    = 0;
-[text, anyKey] = getTemplate("keyMessage");
-        
-% Change to instructions text.
-% Each string in the array is a new line.
-text.text = [
-    "Use the mouse to match the card on the top with one of the four cards on the bottom. Each time we will tell you whether you were right or wrong. The correct match is based on ONE of the following rules:"
-    ""
-    "NUMBER of shapes (1, 2, 3, 4)"
-    "COLOR (blue, green, red, yellow)"
-    "SHAPE (circle, cross, star, triangle)"
-    ""
-    "We won't tell you which rule it is. The rule lasts for a few choices and you need to figure it out by trial and error across those choices. From time to time the rule will change and you need to figure it out again when that happens."
-    "We'll start with a few choices to get the idea..."
-    ];
+    % Use standard template for a trial that shows a message until the subject presses any key.
+    % Gets text and keyPress objects with relevant properties pre-set, which you can tweak and/or add to if needed:
+    %
+    % <text>.text           = "Press any key to continue...";
+    % <text>.fontSize       = 0.7;
+    % <text>.wrapWidth      = 60;
+    % <text>.start.t        = 0;
+    % <text>.end.response	= true;
+    %
+    % <keyPress>.start.t    = 0;
+    [text, anyKey] = getTemplate("keyMessage");
 
-%Add trial definition with name "intro"
-addTrial(text, anyKey, "intro");
+    % Change to instructions text.
+    % Each string in the array is a new line.
+    text.text = [
+        "Use the mouse to match the card on the top with one of the four cards on the bottom. Each time we will tell you whether you were right or wrong. The correct match is based on ONE of the following rules:"
+        ""
+        "NUMBER of shapes (1, 2, 3, 4)"
+        "COLOR (blue, green, red, yellow)"
+        "SHAPE (circle, cross, star, triangle)"
+        ""
+        "We won't tell you which rule it is. The rule lasts for a few choices and you need to figure it out by trial and error across those choices. From time to time the rule will change and you need to figure it out again when that happens."
+        "We'll start with a few choices to get the idea..."
+        ];
+
+    %Add trial definition with name "intro"
+    addTrial(text, anyKey, "intro");
+    % ---
 
 
 
-[text, anyKey] = getTemplate("keyMessage");
+    [text, anyKey] = getTemplate("keyMessage");
 
-text.text = "Okay! Remember the rule will change from time to time and you need to figure out the new rule when that happens. Press any key to start...";
+    text.text = "Okay! Remember the rule will change from time to time and you need to figure out the new rule when that happens. Press any key to start...";
 
-%Add trial definition with name "pause"
-addTrial(text, anyKey, "pause");
+    %Add trial definition with name "pause"
+    addTrial(text, anyKey, "pause");
+    % ---
 % ==========
 
 

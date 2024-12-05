@@ -124,7 +124,7 @@ for d = [1 2]
         response.start.t = 0;
         % By default keyPress elements end when they record a response -> don't need to set .end
         
-        % See response, score, response latency in results
+        % See response, score, latency in results
         response.report = ["response" "responseScore" "responseLatency"];
         % ---
 
