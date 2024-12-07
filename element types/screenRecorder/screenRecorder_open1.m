@@ -54,12 +54,10 @@ if ~is01(numberFile)
     error('Property .numberFile must be true/false.')
 end
 
-if ~(isRowNum(minNumDigitsInFileName) && ismember(numel(minNumDigitsInFileName), [1 2]) && all(isIntegerVal(minNumDigitsInFileName) & minNumDigitsInFileName > 0))
-    error('Property .minNumDigitsInFileName must be an integer or 1x2 vector of integers > 0.')
+if ~(isRowNum(minNumDigitsInFileName) && ismember(numel(minNumDigitsInFileName), [1 2]) && all(isIntegerVal(minNumDigitsInFileName)))
+    error('Property .minNumDigitsInFileName must be an integer or 1x2 vector of integers.')
 end
-if numel(minNumDigitsInFileName) == 1
-    minNumDigitsInFileName(2) = 1;
-end
+minNumDigitsInFileName = max(minNumDigitsInFileName, 1);
 this.minNumDigitsInFileName = minNumDigitsInFileName;
 
 if ~(isRowChar(elementExpr) || isempty(elementExpr))
@@ -112,8 +110,8 @@ else
         error(['In property .fileName: "' fileExtension '" is not a supported image or movie type.'])
 end
 
-    if saveMovie && any(isspace(fileNameBase))
-        error('Currently Psychtoolbox requires movie file names to not contain spaces.')
+    if saveMovie && any(isspace(fileName))
+        error('In property .fileName: Currently Psychtoolbox cannot handle movie file names that contain spaces. Please use a different name. (Note this includes any path you specify. If the spaces are in a path, you could change the MATLAB current folder to that location so you don''t need to specify the path.)')
     end
 
 %Make folder for file if doesn't exist
@@ -122,10 +120,17 @@ if isempty(x)
     try
         [tf, XMsg] = mkdir(path); if ~tf, error(XMsg), end
     catch X
-            error(['Cannot make folder ' path '.' 10 ...
-                '->' 10 ...
-                10 ...
-                X.message])
+            if any(path == filesep)
+                error(['Cannot make folder ' path '.' 10 ...
+                    '->' 10 ...
+                    10 ...
+                    X.message])
+            else
+                error(['Cannot make folder "' path '".' 10 ...
+                    '->' 10 ...
+                    10 ...
+                    X.message])
+            end
     end
 
 elseif ~numberFile
@@ -135,7 +140,11 @@ elseif ~numberFile
             p = fullfile(path, fileNameBase);
             [~, x] = whereFile(p);
             if ~isempty(x)
-                error([p ' already exists.'])
+                if any(p == filesep)
+                    error(['Folder ' p ' already exists.'])
+                else
+                    error(['Folder "' p '" already exists.'])
+                end
             end
         else
             if ~isempty(whereFile(fileName))
@@ -146,6 +155,16 @@ elseif ~numberFile
 %elseif numberFile = true then numbers file/folder to not overwrite
 end
 %Checked PTB CreateMovie can handle relative paths, so don't need to fix that
+
+if saveImages && numel(minNumDigitsInFileName) == 1
+    if numberFile
+        %Numbering folder, so single minNumDigitsInFileName -> folder, default minNumDigitsInFileName for numbering files = 1
+        minNumDigitsInFileName(2) = 1;
+    else
+        %Not numbering folder, so single minNumDigitsInFileName -> numbering files
+        minNumDigitsInFileName = [1 minNumDigitsInFileName(1)];
+    end
+end
 
 
 if ~isempty(elementExpr)
@@ -218,6 +237,7 @@ this = element_setFrameOrder(this, 'after');
 
 
 this.fileName = fileName;
+this.minNumDigitsInFileName = minNumDigitsInFileName;
 this.size = siz;
 this.saveImage = saveImage;
 this.saveImages = saveImages;

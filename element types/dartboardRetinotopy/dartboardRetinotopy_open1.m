@@ -208,9 +208,6 @@ end
 %Calculate maximum amplitude, contrast before intensity would clip at 0 or 1, for experiment results output
 maxAmplitude = min(1-meanIntensity, meanIntensity-0);
 maxContrast = maxAmplitude/meanIntensity;
-    if amplitude > maxAmplitude
-        error('Intensity is clipped at 0 or 1. See record properties .maxAmplitude, .maxContrast for maximum amplitude/contrast at set mean intensity.')
-    end
     
     
 this.radialScale = radialScale;

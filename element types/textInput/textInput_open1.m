@@ -92,10 +92,12 @@ if ~is01(numberFile)
     error('Property .numberFile must be true/false.')
 end
 if numberFile
-    if ~(isOneNum(minNumDigitsInFileName) && isIntegerVal(minNumDigitsInFileName) && minNumDigitsInFileName > 0)
-        error('Property .minNumDigitsInFileName must be an integer > 0.')
+    if ~(isOneNum(minNumDigitsInFileName) && isIntegerVal(minNumDigitsInFileName))
+        error('Property .minNumDigitsInFileName must be an integer.')
     end
 end
+minNumDigitsInFileName = max(minNumDigitsInFileName, 1);
+this.minNumDigitsInFileName = minNumDigitsInFileName;
 
 if ~(isOneNum(n_device) && isIntegerVal(n_device) && n_device ~= 0 || isempty(n_device))
     error('If property .n_device must be an integer ~= 0, or [].')
@@ -117,10 +119,17 @@ if isempty(p)
     try
         [tf, XMsg] = mkdir(path); if ~tf, error(XMsg), end
     catch X
-            error(['Cannot make folder ' path '.' 10 ...
-                '->' 10 ...
-                10 ...
-                X.message])
+            if any(path == filesep)
+                error(['Cannot make folder ' path '.' 10 ...
+                    '->' 10 ...
+                    10 ...
+                    X.message])
+            else
+                error(['Cannot make folder "' path '".' 10 ...
+                    '->' 10 ...
+                    10 ...
+                    X.message])
+            end
     end
 end
 

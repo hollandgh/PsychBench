@@ -41,7 +41,7 @@ if this.ran && ~isempty(fileName)
     %---
     %Concatenated into one string except carriage returns inserted by enter stay -> line breaks
     response = [text{:}];
-    response = strrep(response, char(13), char(10));
+    response(response == 13) = 10;
     if exist(fileName, 'file')
         %If appending to file that already exists separate from previous text with new line
         response = [10 response];
@@ -50,6 +50,7 @@ if this.ran && ~isempty(fileName)
     try
         %'a' starts new file or appends to existing.
         %'t' inserts 13's with 10's if on Windows.
+        %Okay response is numeric cause fwrite writes characters based on numeric.
         n = fopen(fileName, 'at');
             if n == -1
                 error('Cannot open file.')

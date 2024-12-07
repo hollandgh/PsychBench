@@ -81,7 +81,11 @@ elseif saveImages && ~isempty(nn_textures)
             
                 [~, x] = whereFile(p);
                 if ~isempty(x)
-                    error([p ' already exists.'])
+                    if any(p == filesep)
+                        error(['Folder ' p ' already exists.'])
+                    else
+                        error(['Folder "' p '" already exists.'])
+                    end
                 end
     end
     
